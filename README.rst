@@ -15,7 +15,6 @@ Installation
 
 pip install cricket-cli
 
-
 Demo
 ----
 
@@ -36,3 +35,16 @@ Usage
 
 * cricket standings
     ICC team standings
+
+Building cricket-cli
+--------------------
+
+* Install setuptools and wheel
+    python3 -m pip install --user --upgrade setuptools wheel
+
+* python3 setup.py sdist bdist_wheel
+
+Installing from built package
+-----------------------------
+
+* python3 -m pip install dist/cricket-cli-<version>.tar.gz
