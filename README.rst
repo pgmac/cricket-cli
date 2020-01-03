@@ -30,6 +30,9 @@ Usage
 * cricket scores
     Live cricket scores
 
+* cricket --team=Australia scores
+    Specify a team name to get only their scores
+
 * cricket rankings
     ICC player rankings
 
