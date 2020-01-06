@@ -1,6 +1,5 @@
 import feedparser
 import grequests
-from pprint import pprint
 
 from .score import LiveScore
 

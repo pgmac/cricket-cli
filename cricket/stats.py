@@ -2,7 +2,6 @@ import argparse
 from .live_feed import LiveFeedParser
 from .rankings import IccRankingsParser
 from terminaltables import AsciiTable, SingleTable
-from pprint import pprint
 
 LIVE_FEED_URL = 'http://static.cricinfo.com/rss/livescores.xml'
 PLAYER_RANKINGS_URL = 'http://www.espncricinfo.com/rankings/content/page/211270.html'
