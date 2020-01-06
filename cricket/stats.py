@@ -2,6 +2,7 @@ import argparse
 from .live_feed import LiveFeedParser
 from .rankings import IccRankingsParser
 from terminaltables import AsciiTable, SingleTable
+from pprint import pprint
 
 LIVE_FEED_URL = 'http://static.cricinfo.com/rss/livescores.xml'
 PLAYER_RANKINGS_URL = 'http://www.espncricinfo.com/rankings/content/page/211270.html'
@@ -12,22 +13,23 @@ def get_scores(args):
     """
     Get the current scores
     """
-    live_feeds = LiveFeedParser(LIVE_FEED_URL).get_all_scores()
+    if args.team:
+        live_feeds = LiveFeedParser(LIVE_FEED_URL, args).get_my_team_scores()
+    else:
+        live_feeds = LiveFeedParser(LIVE_FEED_URL, args).get_all_scores()
+
     # Sort scores to show international scores first
     live_feeds = sorted(live_feeds, key=lambda live_feed: ~live_feed.is_international())
-    _print_scores(live_feeds, args.team)
+    _print_scores(live_feeds, args)
 
 
-def _print_scores(live_feeds, my_team=None):
+def _print_scores(live_feeds, args):
     if len(live_feeds) == 0:
         print('No live matches at this time')
         return
+
     live_scores = []
     for feed in live_feeds:
-        # If you have set "my_team", then skip/continue over any other team
-        if my_team is not None and (feed.details['team1_name'] != my_team and feed.details['team2_name'] != my_team):
-            continue
-
         # Add the team scores to the display object
         live_scores.append(['Match', feed.description])
         live_scores.append(['Status', feed.status()])
@@ -70,9 +72,12 @@ def parse_args():
     Parse the command line arguments
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("--team", help='Only return matches where this team is playing')
     subparsers = parser.add_subparsers()
     subparsers.add_parser('scores', help='Live cricket scores').set_defaults(func=get_scores)
+    parser.add_argument("--team", help='Only return matches where this team is playing')
     subparsers.add_parser('rankings', help='ICC player rankings').set_defaults(func=get_rankings)
     subparsers.add_parser('standings', help='ICC team standings').set_defaults(func=get_standings)
+    parser.add_argument("--debug", help="Enable debug mode", default=False, action='store_true')
+    parser.add_argument("--refresh", help="Refresh scores every x seconds", type=int, default=0)
+    parser.add_argument("--series", help="Get live scores for all matches in a series")
     return parser.parse_args()

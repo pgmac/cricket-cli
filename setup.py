@@ -13,9 +13,9 @@ setup(
     long_description=open('README.rst').read(),
     version='1.0.0b4',
     packages=['cricket'],
-    url='http://github.com/cbirajdar/cricket-cli',
-    author='Chetan Birajdar',
-    author_email='birajdar.chetan@gmail.com',
+    url='http://github.com/pgmac/cricket-cli',
+    author='Paul Macdonnell',
+    author_email='paulymac@gmail.com',
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',
