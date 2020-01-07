@@ -22,7 +22,7 @@ class LiveFeedParser:
 
     def get_my_team_scores(self):
         if self.debug:
-            print("Filter to just 'my team'")
+            print("Filter to just 'my team' {}".format(self.my_team))
         return [live_score for live_score in self.get_all_scores() if live_score.is_my_team_playing(self.my_team)]
 
     def _get_scores(self, match_feeds):
