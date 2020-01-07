@@ -9,6 +9,7 @@ class LiveFeedParser:
         self.url = rss_url
         self.debug = args.debug
         self.my_team = args.team
+        self.series = args.series
 
     def get_all_scores(self):
         if self.debug:
@@ -30,6 +31,8 @@ class LiveFeedParser:
         responses = (grequests.get(match_feed['id'].replace('html', 'json')) for match_feed in match_feeds)
         for response in grequests.map(responses):
             match = response.json()
+            if self.series and self.series != match['series'][0]['series_name']:
+                continue
             if self.debug:
                 print("Getting live scores for {}".format(match['description']))
             live_score = LiveScore(match)
