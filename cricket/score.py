@@ -7,6 +7,7 @@ class LiveScore:
         self.live = match_details['live']
         self.details = match_details['match']
         self.innings = match_details['innings']
+        self.series = match_details['series']
 
     def is_international(self):
         return True if self.details.get('international_class_card') else False
