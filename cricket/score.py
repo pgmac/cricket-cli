@@ -21,7 +21,8 @@ class LiveScore:
         return '\n'.join(summary) if filter(None, summary) else 'N/A'
 
     def status(self):
-        return self.live['status']
+        return "{}\nat {} runs per over".format(self.live['status'], self.live['innings']['required_run_rate'])
+        # return self.live['status']
 
     def _innings_summary(self):
         innings_summary = []

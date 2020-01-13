@@ -32,8 +32,22 @@ def _print_scores(live_feeds, args):
     live_scores = []
     for feed in live_feeds:
         # Add the team scores to the display object
-        live_scores.append(['Current time', datetime.now().time()])
-        live_scores.append(['Match', feed.description])
+        live_scores.append(['Current time', "{} ({})".format(datetime.now().strftime('%H:%M:%S'), datetime.utcnow().strftime('%H:%M:%S'))])
+        live_scores.append(['Match', "{}, {} v {} at {}, {}".format(feed.series[0]['series_name'], feed.details['team1_name'],
+                                                                    feed.details['team2_name'], feed.details['ground_name'], feed.details['start_date'])])
+        live_scores.append(
+            [
+                'Start',
+                "{} in {}".format(
+                    feed.details['start_time_gmt'],
+                    (
+                        datetime.strptime(feed.details['start_datetime_gmt'], "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
+                    )
+                )
+            ]
+        )
+
+        # live_scores.append(['Match', feed.description])
         live_scores.append(['Status', feed.status()])
         live_scores.append(['Summary', feed.summary()])
         if feed != live_feeds[-1]:
