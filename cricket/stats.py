@@ -1,4 +1,6 @@
 import argparse
+import os
+from datetime import datetime
 from .live_feed import LiveFeedParser
 from .rankings import IccRankingsParser
 from terminaltables import AsciiTable, SingleTable
@@ -30,6 +32,7 @@ def _print_scores(live_feeds, args):
     live_scores = []
     for feed in live_feeds:
         # Add the team scores to the display object
+        live_scores.append(['Current time', datetime.now().time()])
         live_scores.append(['Match', feed.description])
         live_scores.append(['Status', feed.status()])
         live_scores.append(['Summary', feed.summary()])
@@ -38,6 +41,8 @@ def _print_scores(live_feeds, args):
     table = SingleTable(live_scores)
     table.inner_row_border = True
     table.justify_columns = {0: 'center', 1: 'center', 2: 'center'}
+    if args.refresh > 0:
+        os.system('clear')
     print(table.table)
 
 

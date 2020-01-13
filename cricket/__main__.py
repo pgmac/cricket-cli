@@ -1,10 +1,10 @@
 from .stats import parse_args
 from time import sleep
-import os
+# import os
 
 
 def main():
-    os.system('clear')
+    # os.system('clear')
     args = parse_args()
     while True:
         args.func(args)
