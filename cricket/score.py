@@ -21,7 +21,10 @@ class LiveScore:
         return '\n'.join(summary) if filter(None, summary) else 'N/A'
 
     def status(self):
-        return "{}\nat {} runs per over".format(self.live['status'], self.live['innings']['required_run_rate'])
+        if self.details['present_datetime_gmt'] <= self.details['start_datetime_gmt']:
+            return self.live['status']
+        else:
+            return "{}\nat {} runs per over".format(self.live['status'], self.live['innings']['required_run_rate'])
         # return self.live['status']
 
     def _innings_summary(self):
