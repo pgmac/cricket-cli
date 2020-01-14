@@ -11,7 +11,10 @@ def main():
         if args.refresh == 0:
             break
         else:
-            sleep(args.refresh)
+            try:
+                sleep(args.refresh)
+            except KeyboardInterrupt:
+                break
 
 
 if __name__ == '__main__':
