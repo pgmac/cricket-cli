@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from .live_feed import LiveFeedParser
 from .rankings import IccRankingsParser
-from terminaltables import AsciiTable, SingleTable
+from terminaltables import AsciiTable, SingleTable, DoubleTable
 
 LIVE_FEED_URL = 'http://static.cricinfo.com/rss/livescores.xml'
 PLAYER_RANKINGS_URL = 'http://www.espncricinfo.com/rankings/content/page/211270.html'
@@ -29,8 +29,10 @@ def _print_scores(live_feeds, args):
         print('No live matches at this time')
         return
 
-    live_scores = []
+    if args.refresh > 0:
+        os.system('clear')
     for feed in live_feeds:
+        live_scores = []
         # Add the team scores to the display object
         live_scores.append(['Current time', "{} ({})".format(datetime.now().strftime('%H:%M:%S'), datetime.utcnow().strftime('%H:%M:%S'))])
         live_scores.append(['Match', "{}, {} v {} at {}, {}".format(feed.series[0]['series_name'], feed.details['team1_name'],
@@ -50,14 +52,13 @@ def _print_scores(live_feeds, args):
         # live_scores.append(['Match', feed.description])
         live_scores.append(['Status', feed.status()])
         live_scores.append(['Summary', feed.summary()])
-        if feed != live_feeds[-1]:
-            live_scores.append([])
-    table = SingleTable(live_scores)
-    table.inner_row_border = True
-    table.justify_columns = {0: 'center', 1: 'center', 2: 'center'}
-    if args.refresh > 0:
-        os.system('clear')
-    print(table.table)
+        # if feed != live_feeds[-1]:
+        #     live_scores.append([])
+
+        table = DoubleTable(live_scores)
+        table.inner_row_border = True
+        table.justify_columns = {0: 'center', 1: 'center', 2: 'center'}
+        print(table.table)
 
 
 def get_rankings():
