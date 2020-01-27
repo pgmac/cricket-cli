@@ -37,23 +37,22 @@ def _print_scores(live_feeds, args):
         live_scores.append(['Current time', "{} ({})".format(datetime.now().strftime('%H:%M:%S'), datetime.utcnow().strftime('%H:%M:%S'))])
         live_scores.append(['Match', "{}, {} v {} at {}, {}".format(feed.series[0]['series_name'], feed.details['team1_name'],
                                                                     feed.details['team2_name'], feed.details['ground_name'], feed.details['start_date'])])
-        live_scores.append(
-            [
-                'Start',
-                "{} in {}".format(
-                    feed.details['start_time_gmt'],
-                    (
-                        datetime.strptime(feed.details['start_datetime_gmt'], "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
-                    )
-                )
-            ]
-        )
+        # if feed.details['present_datetime_gmt'] <= feed.details['start_datetime_gmt']:
+        #     live_scores.append(
+        #         [
+        #             'Start',
+        #             "{} in {}".format(
+        #                 feed.details['start_time_gmt'],
+        #                 (
+        #                     datetime.strptime(feed.details['start_datetime_gmt'], "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
+        #                 )
+        #             )
+        #         ]
+        #     )
 
-        # live_scores.append(['Match', feed.description])
         live_scores.append(['Status', feed.status()])
-        live_scores.append(['Summary', feed.summary()])
-        # if feed != live_feeds[-1]:
-        #     live_scores.append([])
+        if feed.details['present_datetime_gmt'] >= feed.details['start_datetime_gmt']:
+            live_scores.append(['Summary', feed.summary()])
 
         table = DoubleTable(live_scores)
         table.inner_row_border = True
