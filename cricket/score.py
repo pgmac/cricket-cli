@@ -24,8 +24,12 @@ class LiveScore:
         if self.details['present_datetime_gmt'] <= self.details['start_datetime_gmt']:
             return self.live['status']
         else:
-            return "{}\nat {} runs per over".format(self.live['status'], self.live['innings']['required_run_rate'])
+            if self.details['result'] == '0' and self.live['innings']['innings_number'] == '2':
+                return "{}\nRequired Run Rate: {}\nCurrent Run Rate: {}".format(self.live['status'], self.live['innings']['required_run_rate'], self.live['innings']['run_rate'])
+            else:
+                return self.live['status']
         # return self.live['status']
+        # result, result_name, live_status, match_status, rain_rule, reduced
 
     def _innings_summary(self):
         innings_summary = []
