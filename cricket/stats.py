@@ -91,11 +91,27 @@ def parse_args():
     """
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
-    subparsers.add_parser('scores', help='Live cricket scores').set_defaults(func=get_scores)
-    parser.add_argument("--team", help='Only return matches where this team is playing')
-    subparsers.add_parser('rankings', help='ICC player rankings').set_defaults(func=get_rankings)
-    subparsers.add_parser('standings', help='ICC team standings').set_defaults(func=get_standings)
+
+    score_group = subparsers.add_parser('scores', help='Live cricket scores')
+    ranking_group = subparsers.add_parser('rankings', help='ICC player rankings')
+    standing_group = subparsers.add_parser('standings', help='ICC team standings')
+
+    group = score_group.add_mutually_exclusive_group()
+    group.add_argument("--team", help='Only return matches where this team is playing')
+    group.add_argument("--series", help="Get live scores for all matches in a series")
+    score_group.set_defaults(func=get_scores)
+
+    ranking_group.add_argument("--team", help='Only return rankings for this team')
+    ranking_group.set_defaults(func=get_rankings)
+
+    group = standing_group.add_mutually_exclusive_group()
+    group.add_argument("--team", help='Only return the standings for this team')
+    group.add_argument("--series", help="Only return the standings for this series")
+    group.set_defaults(func=get_standings)
+
     parser.add_argument("--debug", help="Enable debug mode", default=False, action='store_true')
     parser.add_argument("--refresh", help="Refresh scores every x seconds", type=int, default=0)
-    parser.add_argument("--series", help="Get live scores for all matches in a series")
-    return parser.parse_args()
+
+    args = parser.parse_args()
+
+    return args
