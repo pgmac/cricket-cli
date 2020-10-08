@@ -19,3 +19,6 @@ dist
 # Tox
 .cache
 .tox
+
+# Python Virtualenv
+pythonenv3.8
