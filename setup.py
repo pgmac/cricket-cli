@@ -4,7 +4,7 @@ install_requires = [
     "grequests==0.3.0",
     "feedparser==5.2.1",
     "beautifulsoup4==4.6.0",
-    "terminaltables==3.1.0"
+    "terminaltables==3.1.10"
 ]
 
 setup(
