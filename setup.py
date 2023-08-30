@@ -1,7 +1,7 @@
 from setuptools import setup
 
 install_requires = [
-    "grequests==0.3.0",
+    "grequests==0.7.0",
     "feedparser==6.0.10",
     "beautifulsoup4==4.12.2",
     "terminaltables==3.1.10"
