@@ -3,3 +3,5 @@ feedparser==6.0.10
 feedparser==6.0.10
 beautifulsoup4==4.12.3
 terminaltables==3.1.10
+gevent>=23.9.0 # not directly required, pinned by Snyk to avoid a vulnerability
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
